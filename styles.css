@@ -1,0 +1,204 @@
+body {
+    font-family: 'Poppins', 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a1a, #000000); /* Subtle gradient background */
+    min-height: 100vh;
+    color: #ffffff; /* White text */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    background-color: #2a2a2a; /* Dark gray background for header */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ffffff; /* White header text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    margin: 0;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: #d3d3d3; /* Light gray tagline */
+    margin-top: 10px;
+}
+
+.telegram-link {
+    font-size: 1.5em;
+    color: #a60000; /* Red to match the theme */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.telegram-link:hover {
+    color: #c60000; /* Brighter red on hover */
+}
+
+.controls-container {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-container {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+}
+
+#search-bar {
+    flex: 1;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+#search-bar::placeholder {
+    color: #d3d3d3;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #a60000;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+    background-color: #c60000;
+}
+
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-container label {
+    color: #d3d3d3;
+}
+
+#sort-options {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+.list-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1a1a1a; /* Dark gray background for list items */
+    border: 1px solid #d3d3d3; /* Light gray border */
+    border-radius: 5px;
+}
+
+li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff; /* White text for links */
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+/* Style for folder links */
+li a[href$="/"] {
+    font-weight: bold;
+    color: #a60000; /* Red for folder links */
+}
+
+/* Hover effects */
+li a:hover {
+    color: #c60000; /* Brighter red on hover */
+}
+
+li a[href$="/"]:hover {
+    color: #c60000; /* Brighter red on hover for folders */
+}
+
+/* Style for icons */
+li a i {
+    margin-right: 10px;
+    color: #a60000; /* Red icons */
+}
+
+/* Hover effect for icons */
+li a:hover i {
+    color: #c60000; /* Brighter red on hover */
+}
+
+.download-btn {
+    padding: 5px 10px;
+    background-color: #a60000;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #c60000;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #d3d3d3; /* Light gray border */
+    color: #d3d3d3; /* Light gray footer text */
+}
+
+footer a {
+    color: #a60000; /* Red for footer links */
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #c60000; /* Brighter red on hover */
+    text-decoration: underline;
+}
