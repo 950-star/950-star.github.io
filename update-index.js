@@ -41,7 +41,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
     // Generate list items for files
     const fileListItems = files.map(file => {
         const fileName = file.name;
-        const fileHref = relativePath ? `${relativePath}/${fileName}` : fileName; // Use local file path
+        const fileHref = fileName; // Relative path to the file
         const filePath = path.join(folderPath, fileName);
         const stats = fs.statSync(filePath);
         const fileSize = formatFileSize(stats.size);
@@ -57,7 +57,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
         const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
         const stats = fs.statSync(folderPathNested);
         const fileDate = formatDate(stats.mtime);
-        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder"><div class="list-item-container"><a href="${relativePathNested}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a></div></li>`;
+        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder"><div class="list-item-container"><a href="${folderName}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a></div></li>`;
     }).join('\n');
 
     // Combine files and folders into one list
