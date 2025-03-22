@@ -29,87 +29,113 @@ function formatDate(date) {
     return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
 }
 
-// Read the files and folders in the content directory
-fs.readdir(contentDir, { withFileTypes: true }, (err, entries) => {
-    if (err) {
-        console.error('Error reading content directory:', err);
-        return;
-    }
+// Recursive function to generate index.html for a folder and its subfolders
+function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Paperwallah') {
+    const entries = fs.readdirSync(folderPath, { withFileTypes: true });
+    console.log(`Processing folder: ${relativePath}`);
 
-    console.log('Found the following files/folders in content/:', entries.map(entry => entry.name));
+    // Separate files and folders
+    const files = entries.filter(entry => entry.isFile());
+    const folders = entries.filter(entry => entry.isDirectory());
 
-    // Process each folder to create or update an index.html
-    entries.forEach(entry => {
-        if (entry.isDirectory()) {
-            const folderPath = path.join(contentDir, entry.name);
-            const folderIndexPath = path.join(folderPath, 'index.html');
+    // Generate list items for files
+    const fileListItems = files.map(file => {
+        const fileName = file.name;
+        const fileHref = relativePath ? `${relativePath}/${fileName}` : fileName; // Use local file path
+        const filePath = path.join(folderPath, fileName);
+        const stats = fs.statSync(filePath);
+        const fileSize = formatFileSize(stats.size);
+        const fileDate = formatDate(stats.mtime);
+        const icon = fileName.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ';
+        return `<li data-name="${fileName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="file"><div class="list-item-container"><a href="${fileHref}"${fileName.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${fileName} (${fileSize}, ${fileDate})</a></div></li>`;
+    }).join('\n');
 
-            // Read the files in the folder
-            const folderEntries = fs.readdirSync(folderPath, { withFileTypes: true });
-            const folderListItems = folderEntries
-                .filter(folderEntry => folderEntry.isFile())
-                .map(folderEntry => {
-                    const fileName = folderEntry.name;
-                    const fileHref = fileName;
-                    const filePath = path.join(folderPath, fileName);
-                    const stats = fs.statSync(filePath);
-                    const fileSize = formatFileSize(stats.size);
-                    const fileDate = formatDate(stats.mtime);
-                    const icon = fileName.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ';
-                    return `<li data-name="${fileName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="file"><div class="list-item-container"><a href="${fileHref}"${fileName.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${fileName} (${fileSize}, ${fileDate})</a></div></li>`;
-                })
-                .join('\n');
+    // Generate list items for folders
+    const folderListItems = folders.map(folder => {
+        const folderName = folder.name;
+        const folderPathNested = path.join(folderPath, folderName);
+        const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
+        const stats = fs.statSync(folderPathNested);
+        const fileDate = formatDate(stats.mtime);
+        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder"><div class="list-item-container"><a href="${relativePathNested}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a></div></li>`;
+    }).join('\n');
 
-            // Create or update index.html for the folder
-            const folderHtml = `
+    // Combine files and folders into one list
+    const listItems = `${folderListItems}${folderListItems && fileListItems ? '\n' : ''}${fileListItems}`;
+
+    // Generate index.html for this folder
+    const folderIndexPath = path.join(folderPath, 'index.html');
+    const folderName = path.basename(folderPath);
+    const backLink = relativePath === 'content' ? '../index.html' : '../';
+    const folderHtml = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${entry.name}</title>
+    <title>${folderName}</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>${entry.name} Contents</h1>
+        <h1>${folderName} Contents</h1>
     </header>
     <main>
         <ul id="content-list">
-${folderListItems}
+${listItems}
         </ul>
     </main>
     <footer>
-        <p><a href="../index.html">Back to Paperwallah</a></p>
+        <p><a href="${backLink}">Back to ${parentFolderName}</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
 </body>
 </html>
-            `;
-            fs.writeFileSync(folderIndexPath, folderHtml);
-            console.log('Created/Updated index.html for folder:', entry.name);
-        }
+    `;
+    fs.writeFileSync(folderIndexPath, folderHtml);
+    console.log(`Created/Updated index.html for folder: ${relativePath}`);
+
+    // Recursively process subfolders
+    folders.forEach(folder => {
+        const folderName = folder.name;
+        const folderPathNested = path.join(folderPath, folderName);
+        const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
+        generateIndexForFolder(folderPathNested, relativePathNested, folderName);
     });
+}
 
-    // Generate the list items for the main index.html
-    const listItems = entries.map(entry => {
-        const name = entry.name;
-        const href = "content/" + name + (entry.isDirectory() ? "/" : "");
-        const stats = fs.statSync(path.join(contentDir, name));
-        const fileSize = entry.isFile() ? formatFileSize(stats.size) : '';
-        const fileDate = formatDate(stats.mtime);
-        const icon = entry.isDirectory() ? '<i class="fas fa-folder"></i> ' : (name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
-        const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="download-btn"><i class="fas fa-download"></i></a>` : '';
-        const sizeDateText = entry.isFile() ? ` (${fileSize}, ${fileDate})` : ` (${fileDate})`;
-        const linkTag = `<li data-name="${name.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="${entry.isDirectory() ? 'folder' : 'file'}"><div class="list-item-container"><a href="${href}"${entry.isFile() && name.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${name}${sizeDateText}</a>${downloadButton}</div></li>`;
-        return linkTag;
-    }).join('\n');
+// Process the top-level content directory
+const entries = fs.readdirSync(contentDir, { withFileTypes: true });
+console.log('Found the following files/folders in content/:', entries.map(entry => entry.name));
 
-    console.log('Generated list items for main index.html:\n', listItems);
+// Generate index.html files for all folders and subfolders
+entries.forEach(entry => {
+    if (entry.isDirectory()) {
+        const folderPath = path.join(contentDir, entry.name);
+        const relativePath = `content/${entry.name}`;
+        generateIndexForFolder(folderPath, relativePath);
+    }
+});
 
-    // Create the new index.html content
-    const newHtml = `
+// Generate the list items for the main index.html
+const listItems = entries.map(entry => {
+    const name = entry.name;
+    const href = entry.isDirectory() ? `content/${name}/` : `content/${name}`; // Link to folder's index.html or file
+    const stats = fs.statSync(path.join(contentDir, name));
+    const fileSize = entry.isFile() ? formatFileSize(stats.size) : '';
+    const fileDate = formatDate(stats.mtime);
+    const icon = entry.isDirectory() ? '<i class="fas fa-folder"></i> ' : (name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
+    const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="download-btn"><i class="fas fa-download"></i></a>` : '';
+    const sizeDateText = entry.isFile() ? ` (${fileSize}, ${fileDate})` : ` (${fileDate})`;
+    const linkTag = `<li data-name="${name.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="${entry.isDirectory() ? 'folder' : 'file'}"><div class="list-item-container"><a href="${href}"${entry.isFile() && name.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${name}${sizeDateText}</a>${downloadButton}</div></li>`;
+    return linkTag;
+}).join('\n');
+
+console.log('Generated list items for main index.html:\n', listItems);
+
+// Create the new index.html content for the root
+const newHtml = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,7 +152,7 @@ ${folderListItems}
                 <h1>Paperwallah</h1>
                 <p class="tagline">Your one-stop resource for study materials and PDFs</p>
             </div>
-            <a href="https://t.me/paperwallahgithub" target="_blank" class="telegram-link">
+            <a href="https://t.me/kpchoudhary39" target="_blank" class="telegram-link">
                 <i class="fab fa-telegram-plane"></i>
             </a>
         </div>
@@ -196,14 +222,13 @@ ${listItems}
     </script>
 </body>
 </html>
-    `;
+`;
 
-    // Write the new index.html
-    fs.writeFile(indexPath, newHtml, 'utf8', err => {
-        if (err) {
-            console.error('Error writing index.html:', err);
-            return;
-        }
-        console.log('index.html updated successfully!');
-    });
+// Write the new index.html
+fs.writeFile(indexPath, newHtml, 'utf8', err => {
+    if (err) {
+        console.error('Error writing index.html:', err);
+        return;
+    }
+    console.log('index.html updated successfully!');
 });
