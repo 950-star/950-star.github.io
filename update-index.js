@@ -140,7 +140,7 @@ const newHtml = `
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Paperwallah, contact on tg for anything</title>
+    <title>Paperwallah</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -150,7 +150,7 @@ const newHtml = `
         <div class="header-container">
             <div>
                 <h1>Paperwallah</h1>
-                <p class="tagline">Your one-stop resource for study materials and PDFs</p>
+                <p class="tagline">CONTACT ON TG FOR ANY OTHER MATERIAL</p>
             </div>
             <a href="https://t.me/paperwallahgithub" target="_blank" class="telegram-link">
                 <i class="fab fa-telegram-plane"></i>
