@@ -152,7 +152,7 @@ const newHtml = `
                 <h1>Paperwallah</h1>
                 <p class="tagline">CONTACT ON TG FOR ANY OTHER MATERIAL</p>
             </div>
-            <a href="https://t.me/paperwallahgithub" target="_blank" class="telegram-link">
+            <a href="https://t.me/paperwallah521" target="_blank" class="telegram-link">
                 <i class="fab fa-telegram-plane"></i>
             </a>
         </div>
