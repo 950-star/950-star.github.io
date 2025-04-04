@@ -63,7 +63,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
     // Combine files and folders into one list
     const listItems = `${folderListItems}${folderListItems && fileListItems ? '\n' : ''}${fileListItems}`;
 
-    // Generate index.html for this folder
+    // Generate index.html for this folder with sorting script
     const folderIndexPath = path.join(folderPath, 'index.html');
     const folderName = path.basename(folderPath);
     const backLink = relativePath === 'content' ? '../index.html' : '../';
@@ -90,6 +90,20 @@ ${listItems}
         <p><a href="${backLink}">Back to ${parentFolderName}</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
+    <script>
+        // Automatically sort by date (newest first) on page load
+        window.onload = function() {
+            const list = document.getElementById('content-list');
+            const items = Array.from(list.getElementsByTagName('li'));
+            items.sort((a, b) => {
+                const dateA = new Date(a.dataset.date);
+                const dateB = new Date(b.dataset.date);
+                return dateB - dateA; // Newest first
+            });
+            list.innerHTML = '';
+            items.forEach(item => list.appendChild(item));
+        };
+    </script>
 </body>
 </html>
     `;

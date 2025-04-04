@@ -14,7 +14,7 @@
     </header>
     <main>
         <ul id="content-list">
-<li data-name="index.html" data-date="2025-03-30T16:38:52.447Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (1.67 KB, 2025-03-30)</a></div></li>
+<li data-name="index.html" data-date="2025-04-02T02:44:27.941Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (2.21 KB, 2025-04-02)</a></div></li>
 <li data-name="rbt-01 28 march qp.pdf" data-date="2025-03-29T13:45:12.354Z" data-type="file"><div class="list-item-container"><a href="RBT-01 28 MARCH QP.pdf" target="_blank"><i class="fas fa-file-pdf"></i> RBT-01 28 MARCH QP.pdf (2.39 MB, 2025-03-29)</a></div></li>
 <li data-name="rbt-01 28 march so.pdf" data-date="2025-03-29T13:45:12.799Z" data-type="file"><div class="list-item-container"><a href="RBT-01 28 MARCH SO.pdf" target="_blank"><i class="fas fa-file-pdf"></i> RBT-01 28 MARCH SO.pdf (477.23 KB, 2025-03-29)</a></div></li>
 <li data-name="rbt-02 01 april qp (eng).pdf" data-date="2025-04-02T02:43:03.673Z" data-type="file"><div class="list-item-container"><a href="RBT-02 01 APRIL QP (ENG).pdf" target="_blank"><i class="fas fa-file-pdf"></i> RBT-02 01 APRIL QP (ENG).pdf (1.46 MB, 2025-04-02)</a></div></li>
@@ -26,6 +26,20 @@
         <p><a href="../">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
+    <script>
+        // Automatically sort by date (newest first) on page load
+        window.onload = function() {
+            const list = document.getElementById('content-list');
+            const items = Array.from(list.getElementsByTagName('li'));
+            items.sort((a, b) => {
+                const dateA = new Date(a.dataset.date);
+                const dateB = new Date(b.dataset.date);
+                return dateB - dateA; // Newest first
+            });
+            list.innerHTML = '';
+            items.forEach(item => list.appendChild(item));
+        };
+    </script>
 </body>
 </html>
     

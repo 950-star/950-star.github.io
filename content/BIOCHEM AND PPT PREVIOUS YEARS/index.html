@@ -16,7 +16,7 @@
         <ul id="content-list">
 <li data-name="bio-chem test-01 15 feb qp.pdf" data-date="2025-03-24T10:36:57.427Z" data-type="file"><div class="list-item-container"><a href="BIO-CHEM TEST-01 15 FEB QP.pdf" target="_blank"><i class="fas fa-file-pdf"></i> BIO-CHEM TEST-01 15 FEB QP.pdf (7.31 MB, 2025-03-24)</a></div></li>
 <li data-name="bio-chem test-01 15 feb so.pdf" data-date="2025-03-24T10:36:57.565Z" data-type="file"><div class="list-item-container"><a href="BIO-CHEM TEST-01 15 FEB SO.pdf" target="_blank"><i class="fas fa-file-pdf"></i> BIO-CHEM TEST-01 15 FEB SO.pdf (512.14 KB, 2025-03-24)</a></div></li>
-<li data-name="index.html" data-date="2025-03-30T16:38:52.470Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (2.84 KB, 2025-03-30)</a></div></li>
+<li data-name="index.html" data-date="2025-04-02T02:44:28.062Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (2.84 KB, 2025-04-02)</a></div></li>
 <li data-name="ppt 01 so.pdf" data-date="2025-03-24T10:37:06.990Z" data-type="file"><div class="list-item-container"><a href="PPT 01 SO.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PPT 01 SO.pdf (6.2 MB, 2025-03-24)</a></div></li>
 <li data-name="ppt 01.pdf" data-date="2025-03-24T10:37:12.939Z" data-type="file"><div class="list-item-container"><a href="PPT 01.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PPT 01.pdf (4.77 MB, 2025-03-24)</a></div></li>
 <li data-name="ppt 02 so.pdf" data-date="2025-03-24T10:37:12.697Z" data-type="file"><div class="list-item-container"><a href="PPT 02 SO.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PPT 02 SO.pdf (4.46 MB, 2025-03-24)</a></div></li>
@@ -29,6 +29,20 @@
         <p><a href="../">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
+    <script>
+        // Automatically sort by date (newest first) on page load
+        window.onload = function() {
+            const list = document.getElementById('content-list');
+            const items = Array.from(list.getElementsByTagName('li'));
+            items.sort((a, b) => {
+                const dateA = new Date(a.dataset.date);
+                const dateB = new Date(b.dataset.date);
+                return dateB - dateA; // Newest first
+            });
+            list.innerHTML = '';
+            items.forEach(item => list.appendChild(item));
+        };
+    </script>
 </body>
 </html>
     

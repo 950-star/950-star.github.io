@@ -18,7 +18,7 @@
 <li data-name="ccp_m∆jor_02_plan-b_qp.pdf" data-date="2025-03-24T10:48:24.762Z" data-type="file"><div class="list-item-container"><a href="CCP_M∆JOR_02_PLAN-B_QP.pdf" target="_blank"><i class="fas fa-file-pdf"></i> CCP_M∆JOR_02_PLAN-B_QP.pdf (2.93 MB, 2025-03-24)</a></div></li>
 <li data-name="ccp_m∆jor_03_plan_b_qp.pdf" data-date="2025-03-24T10:48:10.376Z" data-type="file"><div class="list-item-container"><a href="CCP_M∆JOR_03_PLAN_B_QP.pdf" target="_blank"><i class="fas fa-file-pdf"></i> CCP_M∆JOR_03_PLAN_B_QP.pdf (3.3 MB, 2025-03-24)</a></div></li>
 <li data-name="ccp_m∆jor_04_plan_b_qp.pdf" data-date="2025-03-28T08:05:13.359Z" data-type="file"><div class="list-item-container"><a href="CCP_M∆JOR_04_PLAN_B_QP.pdf" target="_blank"><i class="fas fa-file-pdf"></i> CCP_M∆JOR_04_PLAN_B_QP.pdf (4.52 MB, 2025-03-28)</a></div></li>
-<li data-name="index.html" data-date="2025-03-30T16:38:52.481Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (3.3 KB, 2025-03-30)</a></div></li>
+<li data-name="index.html" data-date="2025-04-02T02:44:28.088Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (3.3 KB, 2025-04-02)</a></div></li>
 <li data-name="plan-b_01_sol.pdf" data-date="2025-03-24T10:48:24.425Z" data-type="file"><div class="list-item-container"><a href="PLAN-B_01_SOL.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PLAN-B_01_SOL.pdf (3.42 MB, 2025-03-24)</a></div></li>
 <li data-name="plan-b_02_sol.pdf" data-date="2025-03-24T10:48:21.638Z" data-type="file"><div class="list-item-container"><a href="PLAN-B_02_SOL.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PLAN-B_02_SOL.pdf (625.03 KB, 2025-03-24)</a></div></li>
 <li data-name="plan-b_03_sol.pdf" data-date="2025-03-24T10:48:09.977Z" data-type="file"><div class="list-item-container"><a href="PLAN-B_03_SOL.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PLAN-B_03_SOL.pdf (797.92 KB, 2025-03-24)</a></div></li>
@@ -30,6 +30,20 @@
         <p><a href="../">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
+    <script>
+        // Automatically sort by date (newest first) on page load
+        window.onload = function() {
+            const list = document.getElementById('content-list');
+            const items = Array.from(list.getElementsByTagName('li'));
+            items.sort((a, b) => {
+                const dateA = new Date(a.dataset.date);
+                const dateB = new Date(b.dataset.date);
+                return dateB - dateA; // Newest first
+            });
+            list.innerHTML = '';
+            items.forEach(item => list.appendChild(item));
+        };
+    </script>
 </body>
 </html>
     
