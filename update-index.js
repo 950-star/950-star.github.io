@@ -66,7 +66,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
         const fileDate = formatDate(stats.mtime);
         return `
             <tr>
-                <td><i class="fas fa-folder"></i> ${folderName}</td>
+                <td><a href="${relativePathNested}/"><i class="fas fa-folder"></i> ${folderName}</a></td>
                 <td>-</td>
                 <td>${fileDate}</td>
                 <td></td>
@@ -96,6 +96,8 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
         .table th, .table td { border-color: #444; }
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
+        a { color: #0088cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
         @media (max-width: 768px) {
             .table-responsive { font-size: 14px; }
         }
@@ -135,7 +137,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
 </html>
     `;
     fs.writeFileSync(folderIndexPath, folderHtml);
-    console.log(`Created/Updated index.html for folder: ${relativePath}`);
+    console.log(`Created/Updated index.html for folder: ${relativePath} at ${folderIndexPath}`);
 
     // Recursively process subfolders
     folders.forEach(folder => {
@@ -161,7 +163,7 @@ const tableRows = entries.map(entry => {
     const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a>` : '';
     return `
         <tr>
-            <td>${icon} ${name}</td>
+            <td><a href="${href}">${icon} ${name}</a></td>
             <td>${fileSize}</td>
             <td>${fileDate}</td>
             <td>${downloadButton}</td>
@@ -189,6 +191,8 @@ const newHtml = `
         .table th, .table td { border-color: #444; }
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
+        a { color: #0088cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
         @media (max-width: 768px) {
             .table-responsive { font-size: 14px; }
             .header-container { flex-direction: column; text-align: center; }
