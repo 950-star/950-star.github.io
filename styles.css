@@ -43,11 +43,11 @@ header h1 {
     transform: scale(1.2);
 }
 
-/* ==== Controls ==== */
+/* ==== Search Controls (Reusable Across All Pages) ==== */
 .controls-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center; /* Center search bar for consistency */
     background: rgba(255, 255, 255, 0.05);
     padding: 1rem 2rem;
     margin: 1rem auto;
@@ -55,31 +55,49 @@ header h1 {
     backdrop-filter: blur(8px);
     width: 90%;
     max-width: 900px;
+    position: sticky; /* Keep search bar accessible while scrolling */
+    top: 0; /* Stick to top of viewport */
+    z-index: 100; /* Ensure it stays above other content */
 }
 
 .search-container {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: 100%; /* Ensure search bar takes full width of container */
+    max-width: 600px; /* Limit width for larger screens */
 }
 
 .search-container input {
-    padding: 0.5rem 1rem;
+    flex: 1; /* Allow input to grow */
+    padding: 0.75rem 1rem; /* Slightly larger padding for better UX */
     border: none;
     border-radius: 20px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
     outline: none;
+    font-size: 1rem;
+}
+
+.search-container input::placeholder {
+    color: #ccc; /* Placeholder text color for clarity */
 }
 
 .search-container button {
     background: none;
     border: none;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Slightly larger icon */
     cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
 }
 
+.search-container button:hover {
+    color: #00ffcc; /* Highlight on hover */
+}
+
+/* Hide sort-container on subfolder pages if not needed */
 .sort-container {
     display: flex;
     align-items: center;
@@ -154,6 +172,15 @@ footer {
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .search-container input {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
     }
 
     .list-item-container {

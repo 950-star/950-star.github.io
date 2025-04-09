@@ -3,16 +3,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NCERT EXEMPLAR</title>
+    <title>NCERT EXEMPLAR - Paperwallah</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>NCERT EXEMPLAR Contents</h1>
+        <div class="header-container">
+            <div>
+                <h1>NCERT EXEMPLAR</h1>
+                <p class="tagline">Browse contents of NCERT EXEMPLAR</p>
+            </div>
+            <a href="https://t.me/paperwallah521" target="_blank" class="telegram-link">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+        </div>
     </header>
     <main>
+        <div class="controls-container">
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search entire library...">
+                <button onclick="searchContent()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
         <ul id="content-list">
 <li data-name="arihant ncert examplar biology 12th.pdf" data-date="2025-04-09T12:04:58.371Z" data-type="file">
             <div class="list-item-container">
@@ -32,7 +46,7 @@
                 <a href="Arihant NCERT Examplar Physics 12th.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
             </div>
         </li>
-<li data-name="index.html" data-date="2025-04-09T16:53:34.992Z" data-type="file">
+<li data-name="index.html" data-date="2025-04-09T16:56:30.104Z" data-type="file">
             <div class="list-item-container">
                 <a href="index.html" target="_blank"><i class="fas fa-file"></i> index.html (2.83 KB, 2025-04-09)</a>
                 
@@ -41,17 +55,74 @@
         </ul>
     </main>
     <footer>
-        <p><a href="https://950-star.github.io/">Back to Paperwallah</a></p>
+        <p><a href="/index.html">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
     <script>
-        window.onload = function() {
+        // Store initial content to restore after clearing search
+        const initialContent = document.getElementById('content-list').innerHTML;
+
+        async function searchContent() {
+            const input = document.getElementById('search-bar').value.trim().toLowerCase();
             const list = document.getElementById('content-list');
-            const items = Array.from(list.getElementsByTagName('li'));
-            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
-            list.innerHTML = '';
-            items.forEach(item => list.appendChild(item));
-        };
+
+            if (!input) {
+                // Restore original content if search is cleared
+                list.innerHTML = initialContent;
+                return;
+            }
+
+            try {
+                // Fetch library index for global search
+                const response = await fetch('/library-index.json');
+                if (!response.ok) throw new Error('Failed to fetch library index');
+                const library = await response.json();
+
+                // Filter items by search query
+                const results = library.filter(item => 
+                    item.name.toLowerCase().includes(input)
+                );
+
+                // Generate HTML for search results
+                list.innerHTML = results.map(item => {
+                    const icon = item.type === 'folder' ? '<i class="fas fa-folder"></i> ' 
+                        : (item.name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
+                    const downloadButton = item.type === 'file' && item.name.endsWith('.pdf')
+                        ? `<a href="${item.path}" download class="download-btn"><i class='fas fa-download'></i></a>`
+                        : '';
+                    const sizeDateText = item.type === 'file' && item.size !== undefined 
+                        ? ` (${formatFileSize(item.size)}, ${formatDate(new Date(item.date))})`
+                        : ` (${formatDate(new Date(item.date))})`;
+                    return `
+                        <li data-name="${item.name.toLowerCase()}" data-date="${item.date}" data-type="${item.type}">
+                            <div class="list-item-container">
+                                <a href="${item.path}"${item.type === 'file' && item.name.endsWith('.pdf') ? ' target="_blank"' : ''}>
+                                    ${icon}${item.name}${sizeDateText}
+                                </a>
+                                ${downloadButton}
+                            </div>
+                        </li>`;
+                }).join('');
+
+                function formatFileSize(bytes) {
+                    if (bytes === 0) return '0 Bytes';
+                    const k = 1024;
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                }
+
+                function formatDate(date) {
+                    return date.toISOString().split('T')[0];
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                list.innerHTML = '<li>Failed to load search results.</li>';
+            }
+        }
+
+        // Trigger search on keyup
+        document.getElementById('search-bar').addEventListener('keyup', searchContent);
     </script>
 </body>
 </html>
