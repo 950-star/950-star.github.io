@@ -14,30 +14,44 @@
     </header>
     <main>
         <ul id="content-list">
-<li data-name="arihant ncert examplar biology 12th.pdf" data-date="2025-04-09T12:04:58.371Z" data-type="file"><div class="list-item-container"><a href="Arihant NCERT Examplar Biology 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Biology 12th.pdf (13.09 MB, 2025-04-09)</a></div></li>
-<li data-name="arihant ncert examplar chemistry 12th.pdf" data-date="2025-04-09T12:04:58.371Z" data-type="file"><div class="list-item-container"><a href="Arihant NCERT Examplar Chemistry 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Chemistry 12th.pdf (6.27 MB, 2025-04-09)</a></div></li>
-<li data-name="arihant ncert examplar physics 12th.pdf" data-date="2025-04-09T12:04:58.372Z" data-type="file"><div class="list-item-container"><a href="Arihant NCERT Examplar Physics 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Physics 12th.pdf (3.56 MB, 2025-04-09)</a></div></li>
-<li data-name="index.html" data-date="2025-04-09T16:28:49.505Z" data-type="file"><div class="list-item-container"><a href="index.html"><i class="fas fa-file"></i> index.html (2.38 KB, 2025-04-09)</a></div></li>
+<li data-name="arihant ncert examplar biology 12th.pdf" data-date="2025-04-09T12:04:58.371Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Arihant NCERT Examplar Biology 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Biology 12th.pdf (13.09 MB, 2025-04-09)</a>
+                <a href="Arihant NCERT Examplar Biology 12th.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="arihant ncert examplar chemistry 12th.pdf" data-date="2025-04-09T12:04:58.371Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Arihant NCERT Examplar Chemistry 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Chemistry 12th.pdf (6.27 MB, 2025-04-09)</a>
+                <a href="Arihant NCERT Examplar Chemistry 12th.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="arihant ncert examplar physics 12th.pdf" data-date="2025-04-09T12:04:58.372Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Arihant NCERT Examplar Physics 12th.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Arihant NCERT Examplar Physics 12th.pdf (3.56 MB, 2025-04-09)</a>
+                <a href="Arihant NCERT Examplar Physics 12th.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="index.html" data-date="2025-04-09T16:30:14.608Z" data-type="file">
+            <div class="list-item-container">
+                <a href="index.html" target="_blank"><i class="fas fa-file"></i> index.html (2.38 KB, 2025-04-09)</a>
+                
+            </div>
+        </li>
         </ul>
     </main>
     <footer>
-        <p><a href="../">Back to Paperwallah</a></p>
+        <p><a href="https://950-star.github.io/">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
     <script>
-        // Automatically sort by date (newest first) on page load
         window.onload = function() {
             const list = document.getElementById('content-list');
             const items = Array.from(list.getElementsByTagName('li'));
-            items.sort((a, b) => {
-                const dateA = new Date(a.dataset.date);
-                const dateB = new Date(b.dataset.date);
-                return dateB - dateA; // Newest first
-            });
+            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
             list.innerHTML = '';
             items.forEach(item => list.appendChild(item));
         };
     </script>
 </body>
 </html>
-    

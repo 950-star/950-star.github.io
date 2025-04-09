@@ -1,146 +1,132 @@
-/* ======== GENERAL STYLING ======== */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(145deg, #0a192f, #1c3047);
+  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
   color: #ffffff;
-  min-height: 100vh;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-a {
-  color: #00bcd4;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-a:hover {
-  color: #ffffff;
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-/* ======== HEADER ======== */
 header {
-  padding: 1rem;
   text-align: center;
-  font-size: 1.5rem;
+  padding: 2rem 1rem 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
   font-weight: bold;
 }
 
-/* ======== SEARCH + SORT ======== */
+.tele-icon {
+  font-size: 2rem;
+  color: #1da1f2;
+  margin-top: 10px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
+}
+
 .search-sort {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin: 1.2rem 0;
+  margin-bottom: 1.5rem;
 }
 
-@media (min-width: 600px) {
-  .search-sort {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
-input[type="text"], select {
-  padding: 0.6rem;
-  border-radius: 0.5rem;
+.search-sort input,
+.search-sort select {
+  padding: 0.5rem;
   border: none;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
   font-size: 1rem;
-  width: 100%;
-  max-width: 300px;
 }
 
-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23fff'%20d='M2%205L0%200h4z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.7rem center;
-  background-size: 0.65rem auto;
-}
-
-/* ======== FILE/FOLDER LIST ======== */
-ul.file-list {
+.file-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-ul.file-list li {
-  background: rgba(255, 255, 255, 0.05);
-  margin-bottom: 0.7rem;
-  border-radius: 0.7rem;
-  padding: 0.9rem 1rem;
+.file-item {
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-break: break-word;
   flex-wrap: wrap;
-  transition: background 0.3s;
 }
 
-ul.file-list li:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-ul.file-list li i {
-  margin-right: 0.6rem;
-  color: #00bcd4;
-  font-size: 1.2rem;
-}
-
-/* ======== DOWNLOAD BUTTON ======== */
-.download-btn {
-  color: #00ccff;
-  font-size: 1.2rem;
-  margin-left: 10px;
+.file-link {
+  color: #00bfff;
   text-decoration: none;
-  transition: color 0.3s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+.download-btn {
+  margin-left: auto;
+  padding: 0.3rem 0.7rem;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .download-btn:hover {
-  color: #ffffff;
+  background-color: #007acc;
 }
 
-/* ======== FOOTER ======== */
 footer {
   text-align: center;
-  padding: 2rem 1rem 1rem;
+  margin-top: 3rem;
   font-size: 0.9rem;
-  opacity: 0.8;
+  color: #ccc;
 }
 
-/* ======== BACK LINK ======== */
 footer a {
-  display: block;
-  margin-bottom: 1rem;
-  color: #00bcd4;
+  color: #1da1f2;
+  text-decoration: none;
 }
 
 footer a:hover {
-  color: #ffffff;
+  text-decoration: underline;
 }
 
-/* ======== MOBILE RESPONSIVENESS ======== */
-@media (max-width: 480px) {
-  header {
-    font-size: 1.2rem;
+/* Responsive Fixes */
+@media (min-width: 600px) {
+  .search-sort {
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  ul.file-list li {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.8rem;
+  .file-item {
+    flex-wrap: nowrap;
   }
 
-  .download-btn {
-    margin-top: 0.5rem;
-    margin-left: 0;
+  .file-link {
+    flex-grow: 0;
   }
 }

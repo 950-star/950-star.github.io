@@ -1,21 +1,15 @@
+// update-index.js
 const fs = require('fs');
 const path = require('path');
 
-// Path to the content folder
 const contentDir = path.join(__dirname, 'content');
-console.log('Looking for content folder at:', contentDir);
-
-// Path to index.html
 const indexPath = path.join(__dirname, 'index.html');
-console.log('Looking for index.html at:', indexPath);
 
-// Check if content folder exists
 if (!fs.existsSync(contentDir)) {
     console.error('Error: content/ folder does not exist at', contentDir);
     return;
 }
 
-// Function to format file size
 function formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -24,49 +18,51 @@ function formatFileSize(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// Function to format date
 function formatDate(date) {
-    return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    return date.toISOString().split('T')[0];
 }
 
-// Recursive function to generate index.html for a folder and its subfolders
 function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Paperwallah') {
     const entries = fs.readdirSync(folderPath, { withFileTypes: true });
-    console.log(`Processing folder: ${relativePath}`);
-
-    // Separate files and folders
     const files = entries.filter(entry => entry.isFile());
     const folders = entries.filter(entry => entry.isDirectory());
 
-    // Generate list items for files
     const fileListItems = files.map(file => {
         const fileName = file.name;
-        const fileHref = fileName; // Relative path to the file
+        const fileHref = fileName;
         const filePath = path.join(folderPath, fileName);
         const stats = fs.statSync(filePath);
         const fileSize = formatFileSize(stats.size);
         const fileDate = formatDate(stats.mtime);
         const icon = fileName.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ';
-        return `<li data-name="${fileName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="file"><div class="list-item-container"><a href="${fileHref}"${fileName.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${fileName} (${fileSize}, ${fileDate})</a></div></li>`;
+        const downloadButton = fileName.endsWith('.pdf')
+            ? `<a href="${fileHref}" download class="download-btn"><i class='fas fa-download'></i></a>`
+            : '';
+        return `<li data-name="${fileName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="file">
+            <div class="list-item-container">
+                <a href="${fileHref}" target="_blank">${icon}${fileName} (${fileSize}, ${fileDate})</a>
+                ${downloadButton}
+            </div>
+        </li>`;
     }).join('\n');
 
-    // Generate list items for folders
     const folderListItems = folders.map(folder => {
         const folderName = folder.name;
         const folderPathNested = path.join(folderPath, folderName);
-        const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
         const stats = fs.statSync(folderPathNested);
         const fileDate = formatDate(stats.mtime);
-        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder"><div class="list-item-container"><a href="${folderName}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a></div></li>`;
+        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder">
+            <div class="list-item-container">
+                <a href="${folderName}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a>
+            </div>
+        </li>`;
     }).join('\n');
 
-    // Combine files and folders into one list
     const listItems = `${folderListItems}${folderListItems && fileListItems ? '\n' : ''}${fileListItems}`;
 
-    // Generate index.html for this folder with sorting script
     const folderIndexPath = path.join(folderPath, 'index.html');
     const folderName = path.basename(folderPath);
-    const backLink = relativePath === 'content' ? '../index.html' : '../';
+
     const folderHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -87,68 +83,53 @@ ${listItems}
         </ul>
     </main>
     <footer>
-        <p><a href="${backLink}">Back to ${parentFolderName}</a></p>
+        <p><a href="https://950-star.github.io/">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
     <script>
-        // Automatically sort by date (newest first) on page load
         window.onload = function() {
             const list = document.getElementById('content-list');
             const items = Array.from(list.getElementsByTagName('li'));
-            items.sort((a, b) => {
-                const dateA = new Date(a.dataset.date);
-                const dateB = new Date(b.dataset.date);
-                return dateB - dateA; // Newest first
-            });
+            items.sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date));
             list.innerHTML = '';
             items.forEach(item => list.appendChild(item));
         };
     </script>
 </body>
-</html>
-    `;
+</html>`;
+
     fs.writeFileSync(folderIndexPath, folderHtml);
     console.log(`Created/Updated index.html for folder: ${relativePath}`);
 
-    // Recursively process subfolders
     folders.forEach(folder => {
-        const folderName = folder.name;
-        const folderPathNested = path.join(folderPath, folderName);
-        const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
-        generateIndexForFolder(folderPathNested, relativePathNested, folderName);
+        generateIndexForFolder(path.join(folderPath, folder.name), `${relativePath}/${folder.name}`, folder.name);
     });
 }
 
-// Process the top-level content directory
 const entries = fs.readdirSync(contentDir, { withFileTypes: true });
-console.log('Found the following files/folders in content/:', entries.map(entry => entry.name));
-
-// Generate index.html files for all folders and subfolders
 entries.forEach(entry => {
     if (entry.isDirectory()) {
-        const folderPath = path.join(contentDir, entry.name);
-        const relativePath = `content/${entry.name}`;
-        generateIndexForFolder(folderPath, relativePath);
+        generateIndexForFolder(path.join(contentDir, entry.name), `content/${entry.name}`);
     }
 });
 
-// Generate the list items for the main index.html
 const listItems = entries.map(entry => {
     const name = entry.name;
-    const href = entry.isDirectory() ? `content/${name}/` : `content/${name}`; // Link to folder's index.html or file
+    const href = entry.isDirectory() ? `content/${name}/` : `content/${name}`;
     const stats = fs.statSync(path.join(contentDir, name));
     const fileSize = entry.isFile() ? formatFileSize(stats.size) : '';
     const fileDate = formatDate(stats.mtime);
     const icon = entry.isDirectory() ? '<i class="fas fa-folder"></i> ' : (name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
-    const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="download-btn"><i class="fas fa-download"></i></a>` : '';
+    const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="download-btn"><i class='fas fa-download'></i></a>` : '';
     const sizeDateText = entry.isFile() ? ` (${fileSize}, ${fileDate})` : ` (${fileDate})`;
-    const linkTag = `<li data-name="${name.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="${entry.isDirectory() ? 'folder' : 'file'}"><div class="list-item-container"><a href="${href}"${entry.isFile() && name.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${name}${sizeDateText}</a>${downloadButton}</div></li>`;
-    return linkTag;
+    return `<li data-name="${name.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="${entry.isDirectory() ? 'folder' : 'file'}">
+        <div class="list-item-container">
+            <a href="${href}"${entry.isFile() && name.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${name}${sizeDateText}</a>
+            ${downloadButton}
+        </div>
+    </li>`;
 }).join('\n');
 
-console.log('Generated list items for main index.html:\n', listItems);
-
-// Create the new index.html content for the root
 const newHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -156,7 +137,7 @@ const newHtml = `
     <meta charset="UTF-8">
     <title>Paperwallah</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -194,6 +175,7 @@ ${listItems}
         </ul>
     </main>
     <footer>
+        <p><a href="https://950-star.github.io/">Back to Paperwallah</a></p>
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
     <script>
@@ -235,14 +217,9 @@ ${listItems}
         }
     </script>
 </body>
-</html>
-`;
+</html>`;
 
-// Write the new index.html
 fs.writeFile(indexPath, newHtml, 'utf8', err => {
-    if (err) {
-        console.error('Error writing index.html:', err);
-        return;
-    }
-    console.log('index.html updated successfully!');
+    if (err) console.error('Error writing index.html:', err);
+    else console.log('index.html updated successfully!');
 });
