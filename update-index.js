@@ -29,10 +29,21 @@ function formatDate(date) {
     return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
 }
 
+// Function to delete existing index.html if it exists
+function deleteExistingIndex(folderPath) {
+    const indexPath = path.join(folderPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+        fs.unlinkSync(indexPath);
+        console.log(`Deleted existing index.html at ${indexPath} at ${new Date().toLocaleTimeString()}`);
+    }
+}
+
 // Recursive function to generate index.html for a folder and its subfolders
 function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Paperwallah') {
+    console.log(`Entering folder: ${relativePath} at ${new Date().toLocaleTimeString()}`);
+    deleteExistingIndex(folderPath); // Delete existing index.html before writing
+
     const entries = fs.readdirSync(folderPath, { withFileTypes: true });
-    console.log(`Processing folder: ${relativePath}`);
 
     // Separate files and folders
     const files = entries.filter(entry => entry.isFile());
@@ -151,10 +162,10 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
 
     // Recursively process subfolders
     folders.forEach(folder => {
-        const folderName = folder.name;
-        const folderPathNested = path.join(folderPath, folderName);
-        const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
-        generateIndexForFolder(folderPathNested, relativePathNested, folderName);
+        console.log(`Processing subfolder: ${folder.name} in ${relativePath}`);
+        const folderPathNested = path.join(folderPath, folder.name);
+        const relativePathNested = relativePath ? `${relativePath}/${folder.name}` : `content/${folder.name}`;
+        generateIndexForFolder(folderPathNested, relativePathNested, folder.name);
     });
 }
 
@@ -181,6 +192,9 @@ const tableRows = entries.map(entry => {
 }).join('\n');
 
 console.log('Generated table rows for main index.html:\n', tableRows);
+
+// Delete existing root index.html before writing
+deleteExistingIndex(__dirname);
 
 // Create the new index.html content for the root
 const newHtml = `
@@ -254,7 +268,7 @@ const newHtml = `
 `;
 
 // Write the new index.html
-fs.writeFile(indexPath, newHtml, { flag: 'w' }, err => {
+fs.writeFileSync(indexPath, newHtml, { flag: 'w' }, err => {
     if (err) {
         console.error('Error writing index.html:', err);
         return;
