@@ -70,6 +70,7 @@ header h1 {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
     outline: none;
+    font-size: 1rem;
 }
 
 .search-container button {
@@ -93,6 +94,7 @@ header h1 {
     border: none;
     border-radius: 8px;
     outline: none;
+    font-size: 1rem;
 }
 
 /* ==== File/Folder List ==== */
@@ -148,16 +150,46 @@ footer {
     backdrop-filter: blur(6px);
 }
 
-/* ==== Responsive ==== */
+/* ==== Responsive Adjustments for Mobile ==== */
 @media (max-width: 600px) {
+    body {
+        font-size: 1.1rem;
+    }
+    
+    header {
+        padding: 0.8rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
     .controls-container {
         flex-direction: column;
         gap: 1rem;
-        align-items: center;
+        align-items: stretch;
+        padding: 1rem;
     }
-
-    .list-item-container {
-        flex-direction: column;
-        align-items: flex-start;
+    
+    .search-container input,
+    .sort-container select {
+        font-size: 1.1rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    .search-container button {
+        font-size: 1.2rem;
+    }
+    
+    #content-list li {
+        padding: 1rem;
+        margin: 0.8rem 0;
+    }
+    
+    .telegram-link {
+        font-size: 1.8rem;
+        margin-top: 0.5rem;
     }
 }
