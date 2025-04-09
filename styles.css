@@ -1,115 +1,163 @@
-/* Background & Layout */
+/* ==== Base Styles ==== */
 body {
-  background: linear-gradient(to right top, #001f2e, #012c3f);
-  color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 20px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Bluish gradient */
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-h1 {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 10px;
+/* ==== Header ==== */
+header {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
 }
 
-.subheading {
-  text-align: center;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 10px;
+header h1 {
+    margin: 0;
+    font-size: 2rem;
 }
 
-.icon-container {
-  text-align: center;
-  margin-bottom: 20px;
+.tagline {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-top: 4px;
 }
 
-.tg-icon {
-  font-size: 24px;
-  color: #00bcd4;
+/* ==== Telegram Button ==== */
+.telegram-link {
+    font-size: 1.5rem;
+    color: #00bfff;
+    transition: transform 0.2s ease;
 }
 
-/* Search bar */
-#search {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  width: 250px;
-  background-color: #1a1a1a;
-  color: #00e5ff;
+.telegram-link:hover {
+    transform: scale(1.2);
 }
 
-#search::placeholder {
-  color: #888;
+/* ==== Controls ==== */
+.controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem 2rem;
+    margin: 1rem auto;
+    border-radius: 1rem;
+    backdrop-filter: blur(8px);
+    width: 90%;
+    max-width: 900px;
 }
 
-/* Sort Dropdown */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-container input {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+}
+
+.search-container button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
 .sort-container {
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.sort-container label {
-  margin-right: 8px;
+.sort-container select {
+    padding: 0.4rem 0.6rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    outline: none;
 }
 
-#sort {
-  padding: 6px 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #1a1a1a;
-  color: #00e5ff;
+/* ==== File/Folder List ==== */
+#content-list {
+    list-style: none;
+    padding: 0;
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
 }
 
-/* File & Folder List */
-ul {
-  list-style: none;
-  padding: 0;
+#content-list li {
+    margin: 0.6rem 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem 1rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s;
 }
 
-li {
-  margin: 10px 0;
+#content-list li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.folder a,
-.file a {
-  color: #00e5ff;
-  text-decoration: none;
-  font-weight: 500;
+.list-item-container a {
+    color: #a6e1fa;
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.folder a:hover,
-.file a:hover {
-  text-decoration: underline;
+.list-item-container a:hover {
+    text-decoration: underline;
 }
 
-/* Download Button */
 .download-btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin-left: 8px;
-  font-size: 14px;
-  text-decoration: none;
+    margin-left: 1rem;
+    color: #00ffcc;
+    text-decoration: none;
+    font-size: 1.2rem;
 }
 
-.download-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Footer */
+/* ==== Footer ==== */
 footer {
-  text-align: center;
-  margin-top: 30px;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-top: auto;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
 }
 
-footer a {
-  color: #00bcd4;
-  text-decoration: none;
-}
+/* ==== Responsive ==== */
+@media (max-width: 600px) {
+    .controls-container {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
 
-footer a:hover {
-  text-decoration: underline;
+    .list-item-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
