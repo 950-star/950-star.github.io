@@ -3,13 +3,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paperwallah</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #1a1a1a; color: #e0e0e0; }
+        .card { background-color: #2c2c2c; border: 1px solid #444; border-radius: 8px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+        .telegram-link { color: #0088cc; font-size: 24px; }
+        .table { color: #e0e0e0; }
+        .table th, .table td { border-color: #444; }
+        .btn-danger { background-color: #dc3545; border: none; }
+        .btn-danger:hover { background-color: #c82333; }
+        @media (max-width: 768px) {
+            .table-responsive { font-size: 14px; }
+            .header-container { flex-direction: column; text-align: center; }
+            .telegram-link { margin-top: 10px; }
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <header class="bg-dark">
         <div class="header-container">
             <div>
                 <h1>Paperwallah</h1>
@@ -20,84 +35,148 @@
             </a>
         </div>
     </header>
-    <main>
-        <div class="controls-container">
-            <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search for PDFs or folders...">
-                <button onclick="searchContent()"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="sort-container">
-                <label for="sort-options">Sort by:</label>
-                <select id="sort-options" onchange="sortContent()">
-                    <option value="name-asc">Name (A-Z)</option>
-                    <option value="name-desc">Name (Z-A)</option>
-                    <option value="date-asc">Date (Oldest First)</option>
-                    <option value="date-desc">Date (Newest First)</option>
-                    <option value="type-asc">Type (Folders First)</option>
-                    <option value="type-desc">Type (Files First)</option>
-                </select>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+        <tr>
+            <td><i class="fas fa-folder"></i> 0ENTHUSE ADVANCE MAJOR 2024-25</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> AAKASH AIATS DROPPER NEET 2025</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> aakash intensive 2025</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> ACHIEVER LEADER 2024-25 MAJOR START FROM 24 FEB</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> AIIMS QUESTIONS PREVIOUS</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-file-pdf"></i> AIOT 06 APRIL SOL ALLEN.pdf</td>
+            <td>860.09 KB</td>
+            <td>2025-04-09</td>
+            <td><a href="content/AIOT 06 APRIL SOL ALLEN.pdf" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-file-pdf"></i> AIOT 06 PARIL ALLEN.pdf</td>
+            <td>3.61 MB</td>
+            <td>2025-04-09</td>
+            <td><a href="content/AIOT 06 PARIL ALLEN.pdf" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> ALLEN RBT 2024-25</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> ALLEN STUFF</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> BIOCHEM AND PPT PREVIOUS YEARS</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> CCP LEADER & ACHIEVER COURSE PHASE START FROM 13 MARCH</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> JEE MAIN PYQ 5 YEARS</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> NCERT EXEMPLAR</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> SAT CHAPTERWISE ALLEN</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> SRG ENTHUSE</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> SRG FULL SYLLABUS</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td><i class="fas fa-folder"></i> SRG PART SYLLABUS</td>
+            <td>-</td>
+            <td>2025-04-09</td>
+            <td></td>
+        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <ul id="content-list">
-<li data-name="0enthuse advance major 2024-25" data-date="2025-04-09T14:25:18.039Z" data-type="folder"><div class="list-item-container"><a href="content/0ENTHUSE ADVANCE MAJOR 2024-25/"><i class="fas fa-folder"></i> 0ENTHUSE ADVANCE MAJOR 2024-25 (2025-04-09)</a></div></li>
-<li data-name="aakash aiats dropper neet 2025" data-date="2025-04-09T14:25:20.819Z" data-type="folder"><div class="list-item-container"><a href="content/AAKASH AIATS DROPPER NEET 2025/"><i class="fas fa-folder"></i> AAKASH AIATS DROPPER NEET 2025 (2025-04-09)</a></div></li>
-<li data-name="aakash intensive 2025" data-date="2025-04-09T14:32:45.194Z" data-type="folder"><div class="list-item-container"><a href="content/aakash intensive 2025/"><i class="fas fa-folder"></i> aakash intensive 2025 (2025-04-09)</a></div></li>
-<li data-name="achiever leader 2024-25 major start from 24 feb" data-date="2025-04-09T14:32:45.322Z" data-type="folder"><div class="list-item-container"><a href="content/ACHIEVER LEADER 2024-25 MAJOR START FROM 24 FEB/"><i class="fas fa-folder"></i> ACHIEVER LEADER 2024-25 MAJOR START FROM 24 FEB (2025-04-09)</a></div></li>
-<li data-name="aiims questions previous" data-date="2025-04-09T14:25:22.194Z" data-type="folder"><div class="list-item-container"><a href="content/AIIMS QUESTIONS PREVIOUS/"><i class="fas fa-folder"></i> AIIMS QUESTIONS PREVIOUS (2025-04-09)</a></div></li>
-<li data-name="aiot 06 april sol allen.pdf" data-date="2025-04-09T14:25:22.209Z" data-type="file"><div class="list-item-container"><a href="content/AIOT 06 APRIL SOL ALLEN.pdf" target="_blank"><i class="fas fa-file-pdf"></i> AIOT 06 APRIL SOL ALLEN.pdf (860.09 KB, 2025-04-09)</a><a href="content/AIOT 06 APRIL SOL ALLEN.pdf" download class="download-btn"><i class="fas fa-download"></i></a></div></li>
-<li data-name="aiot 06 paril allen.pdf" data-date="2025-04-09T14:25:22.255Z" data-type="file"><div class="list-item-container"><a href="content/AIOT 06 PARIL ALLEN.pdf" target="_blank"><i class="fas fa-file-pdf"></i> AIOT 06 PARIL ALLEN.pdf (3.61 MB, 2025-04-09)</a><a href="content/AIOT 06 PARIL ALLEN.pdf" download class="download-btn"><i class="fas fa-download"></i></a></div></li>
-<li data-name="allen rbt 2024-25" data-date="2025-04-09T14:25:22.427Z" data-type="folder"><div class="list-item-container"><a href="content/ALLEN RBT 2024-25/"><i class="fas fa-folder"></i> ALLEN RBT 2024-25 (2025-04-09)</a></div></li>
-<li data-name="allen stuff" data-date="2025-04-09T14:25:22.482Z" data-type="folder"><div class="list-item-container"><a href="content/ALLEN STUFF/"><i class="fas fa-folder"></i> ALLEN STUFF (2025-04-09)</a></div></li>
-<li data-name="biochem and ppt previous years" data-date="2025-04-09T14:25:22.992Z" data-type="folder"><div class="list-item-container"><a href="content/BIOCHEM AND PPT PREVIOUS YEARS/"><i class="fas fa-folder"></i> BIOCHEM AND PPT PREVIOUS YEARS (2025-04-09)</a></div></li>
-<li data-name="ccp leader & achiever course phase start from 13 march" data-date="2025-04-09T14:25:23.409Z" data-type="folder"><div class="list-item-container"><a href="content/CCP LEADER & ACHIEVER COURSE PHASE START FROM 13 MARCH/"><i class="fas fa-folder"></i> CCP LEADER & ACHIEVER COURSE PHASE START FROM 13 MARCH (2025-04-09)</a></div></li>
-<li data-name="jee main pyq 5 years" data-date="2025-04-09T14:25:23.969Z" data-type="folder"><div class="list-item-container"><a href="content/JEE MAIN PYQ 5 YEARS/"><i class="fas fa-folder"></i> JEE MAIN PYQ 5 YEARS (2025-04-09)</a></div></li>
-<li data-name="ncert exemplar" data-date="2025-04-09T14:25:24.211Z" data-type="folder"><div class="list-item-container"><a href="content/NCERT EXEMPLAR/"><i class="fas fa-folder"></i> NCERT EXEMPLAR (2025-04-09)</a></div></li>
-<li data-name="sat chapterwise allen" data-date="2025-04-09T14:25:24.893Z" data-type="folder"><div class="list-item-container"><a href="content/SAT CHAPTERWISE ALLEN/"><i class="fas fa-folder"></i> SAT CHAPTERWISE ALLEN (2025-04-09)</a></div></li>
-<li data-name="srg enthuse" data-date="2025-04-09T14:25:26.362Z" data-type="folder"><div class="list-item-container"><a href="content/SRG ENTHUSE/"><i class="fas fa-folder"></i> SRG ENTHUSE (2025-04-09)</a></div></li>
-<li data-name="srg full syllabus" data-date="2025-04-09T14:32:44.102Z" data-type="folder"><div class="list-item-container"><a href="content/SRG FULL SYLLABUS/"><i class="fas fa-folder"></i> SRG FULL SYLLABUS (2025-04-09)</a></div></li>
-<li data-name="srg part syllabus" data-date="2025-04-09T14:32:44.626Z" data-type="folder"><div class="list-item-container"><a href="content/SRG PART SYLLABUS/"><i class="fas fa-folder"></i> SRG PART SYLLABUS (2025-04-09)</a></div></li>
-        </ul>
-    </main>
-    <footer>
+    </div>
+    <footer class="text-center p-3 mt-4 bg-dark">
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
-    <script>
-        function searchContent() {
-            const input = document.getElementById('search-bar').value.toLowerCase();
-            const items = document.querySelectorAll('#content-list li');
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(input) ? '' : 'none';
-            });
-        }
-
-        document.getElementById('search-bar').addEventListener('keyup', searchContent);
-
-        function sortContent() {
-            const sortOption = document.getElementById('sort-options').value;
-            const list = document.getElementById('content-list');
-            const items = Array.from(list.getElementsByTagName('li'));
-
-            items.sort((a, b) => {
-                const nameA = a.dataset.name;
-                const nameB = b.dataset.name;
-                const dateA = new Date(a.dataset.date);
-                const dateB = new Date(b.dataset.date);
-                const typeA = a.dataset.type;
-                const typeB = b.dataset.type;
-
-                if (sortOption === 'name-asc') return nameA.localeCompare(nameB);
-                if (sortOption === 'name-desc') return nameB.localeCompare(nameA);
-                if (sortOption === 'date-asc') return dateA - dateB;
-                if (sortOption === 'date-desc') return dateB - dateA;
-                if (sortOption === 'type-asc') return typeA.localeCompare(typeB);
-                if (sortOption === 'type-desc') return typeB.localeCompare(typeA);
-                return 0;
-            });
-
-            list.innerHTML = '';
-            items.forEach(item => list.appendChild(item));
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

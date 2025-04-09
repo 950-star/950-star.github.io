@@ -38,32 +38,45 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
     const files = entries.filter(entry => entry.isFile());
     const folders = entries.filter(entry => entry.isDirectory());
 
-    // Generate list items for files
-    const fileListItems = files.map(file => {
+    // Generate table rows for files
+    const fileRows = files.map(file => {
         const fileName = file.name;
         const fileHref = fileName; // Relative path to the file
         const filePath = path.join(folderPath, fileName);
         const stats = fs.statSync(filePath);
         const fileSize = formatFileSize(stats.size);
         const fileDate = formatDate(stats.mtime);
-        const icon = fileName.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ';
-        return `<li data-name="${fileName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="file"><div class="list-item-container"><a href="${fileHref}"${fileName.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${fileName} (${fileSize}, ${fileDate})</a></div></li>`;
+        const icon = fileName.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i>' : '<i class="fas fa-file"></i>';
+        const downloadButton = fileName.endsWith('.pdf') ? `<a href="${fileHref}" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a>` : '';
+        return `
+            <tr>
+                <td>${icon} ${fileName}</td>
+                <td>${fileSize}</td>
+                <td>${fileDate}</td>
+                <td>${downloadButton}</td>
+            </tr>`;
     }).join('\n');
 
-    // Generate list items for folders
-    const folderListItems = folders.map(folder => {
+    // Generate table rows for folders
+    const folderRows = folders.map(folder => {
         const folderName = folder.name;
         const folderPathNested = path.join(folderPath, folderName);
         const relativePathNested = relativePath ? `${relativePath}/${folderName}` : `content/${folderName}`;
         const stats = fs.statSync(folderPathNested);
         const fileDate = formatDate(stats.mtime);
-        return `<li data-name="${folderName.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="folder"><div class="list-item-container"><a href="${folderName}/"><i class="fas fa-folder"></i> ${folderName} (${fileDate})</a></div></li>`;
+        return `
+            <tr>
+                <td><i class="fas fa-folder"></i> ${folderName}</td>
+                <td>-</td>
+                <td>${fileDate}</td>
+                <td></td>
+            </tr>`;
     }).join('\n');
 
-    // Combine files and folders into one list
-    const listItems = `${folderListItems}${folderListItems && fileListItems ? '\n' : ''}${fileListItems}`;
+    // Combine files and folders into one table
+    const tableRows = `${folderRows}${folderRows && fileRows ? '\n' : ''}${fileRows}`;
 
-    // Generate index.html for this folder with sorting script
+    // Generate index.html for this folder
     const folderIndexPath = path.join(folderPath, 'index.html');
     const folderName = path.basename(folderPath);
     const backLink = relativePath === 'content' ? '../index.html' : '../';
@@ -72,38 +85,52 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${folderName}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #1a1a1a; color: #e0e0e0; }
+        .card { background-color: #2c2c2c; border: 1px solid #444; border-radius: 8px; }
+        .table { color: #e0e0e0; }
+        .table th, .table td { border-color: #444; }
+        .btn-danger { background-color: #dc3545; border: none; }
+        .btn-danger:hover { background-color: #c82333; }
+        @media (max-width: 768px) {
+            .table-responsive { font-size: 14px; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>${folderName} Contents</h1>
+    <header class="p-3">
+        <h1 class="text-center">${folderName} Contents</h1>
+        <a href="${backLink}" class="btn btn-secondary mt-2">Back to ${parentFolderName}</a>
     </header>
-    <main>
-        <ul id="content-list">
-${listItems}
-        </ul>
-    </main>
-    <footer>
-        <p><a href="${backLink}">Back to ${parentFolderName}</a></p>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center p-3 mt-4">
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
-    <script>
-        // Automatically sort by date (newest first) on page load
-        window.onload = function() {
-            const list = document.getElementById('content-list');
-            const items = Array.from(list.getElementsByTagName('li'));
-            items.sort((a, b) => {
-                const dateA = new Date(a.dataset.date);
-                const dateB = new Date(b.dataset.date);
-                return dateB - dateA; // Newest first
-            });
-            list.innerHTML = '';
-            items.forEach(item => list.appendChild(item));
-        };
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
     `;
@@ -123,30 +150,25 @@ ${listItems}
 const entries = fs.readdirSync(contentDir, { withFileTypes: true });
 console.log('Found the following files/folders in content/:', entries.map(entry => entry.name));
 
-// Generate index.html files for all folders and subfolders
-entries.forEach(entry => {
-    if (entry.isDirectory()) {
-        const folderPath = path.join(contentDir, entry.name);
-        const relativePath = `content/${entry.name}`;
-        generateIndexForFolder(folderPath, relativePath);
-    }
-});
-
-// Generate the list items for the main index.html
-const listItems = entries.map(entry => {
+// Generate table rows for the main index.html
+const tableRows = entries.map(entry => {
     const name = entry.name;
-    const href = entry.isDirectory() ? `content/${name}/` : `content/${name}`; // Link to folder's index.html or file
+    const href = entry.isDirectory() ? `content/${name}/` : `content/${name}`;
     const stats = fs.statSync(path.join(contentDir, name));
-    const fileSize = entry.isFile() ? formatFileSize(stats.size) : '';
+    const fileSize = entry.isFile() ? formatFileSize(stats.size) : '-';
     const fileDate = formatDate(stats.mtime);
-    const icon = entry.isDirectory() ? '<i class="fas fa-folder"></i> ' : (name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
-    const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="download-btn"><i class="fas fa-download"></i></a>` : '';
-    const sizeDateText = entry.isFile() ? ` (${fileSize}, ${fileDate})` : ` (${fileDate})`;
-    const linkTag = `<li data-name="${name.toLowerCase()}" data-date="${stats.mtime.toISOString()}" data-type="${entry.isDirectory() ? 'folder' : 'file'}"><div class="list-item-container"><a href="${href}"${entry.isFile() && name.endsWith('.pdf') ? ' target="_blank"' : ''}>${icon}${name}${sizeDateText}</a>${downloadButton}</div></li>`;
-    return linkTag;
+    const icon = entry.isDirectory() ? '<i class="fas fa-folder"></i>' : (name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i>' : '<i class="fas fa-file"></i>');
+    const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a>` : '';
+    return `
+        <tr>
+            <td>${icon} ${name}</td>
+            <td>${fileSize}</td>
+            <td>${fileDate}</td>
+            <td>${downloadButton}</td>
+        </tr>`;
 }).join('\n');
 
-console.log('Generated list items for main index.html:\n', listItems);
+console.log('Generated table rows for main index.html:\n', tableRows);
 
 // Create the new index.html content for the root
 const newHtml = `
@@ -154,13 +176,28 @@ const newHtml = `
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paperwallah</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #1a1a1a; color: #e0e0e0; }
+        .card { background-color: #2c2c2c; border: 1px solid #444; border-radius: 8px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+        .telegram-link { color: #0088cc; font-size: 24px; }
+        .table { color: #e0e0e0; }
+        .table th, .table td { border-color: #444; }
+        .btn-danger { background-color: #dc3545; border: none; }
+        .btn-danger:hover { background-color: #c82333; }
+        @media (max-width: 768px) {
+            .table-responsive { font-size: 14px; }
+            .header-container { flex-direction: column; text-align: center; }
+            .telegram-link { margin-top: 10px; }
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <header class="bg-dark">
         <div class="header-container">
             <div>
                 <h1>Paperwallah</h1>
@@ -171,69 +208,31 @@ const newHtml = `
             </a>
         </div>
     </header>
-    <main>
-        <div class="controls-container">
-            <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search for PDFs or folders...">
-                <button onclick="searchContent()"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="sort-container">
-                <label for="sort-options">Sort by:</label>
-                <select id="sort-options" onchange="sortContent()">
-                    <option value="name-asc">Name (A-Z)</option>
-                    <option value="name-desc">Name (Z-A)</option>
-                    <option value="date-asc">Date (Oldest First)</option>
-                    <option value="date-desc">Date (Newest First)</option>
-                    <option value="type-asc">Type (Folders First)</option>
-                    <option value="type-desc">Type (Files First)</option>
-                </select>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <ul id="content-list">
-${listItems}
-        </ul>
-    </main>
-    <footer>
+    </div>
+    <footer class="text-center p-3 mt-4 bg-dark">
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
-    <script>
-        function searchContent() {
-            const input = document.getElementById('search-bar').value.toLowerCase();
-            const items = document.querySelectorAll('#content-list li');
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(input) ? '' : 'none';
-            });
-        }
-
-        document.getElementById('search-bar').addEventListener('keyup', searchContent);
-
-        function sortContent() {
-            const sortOption = document.getElementById('sort-options').value;
-            const list = document.getElementById('content-list');
-            const items = Array.from(list.getElementsByTagName('li'));
-
-            items.sort((a, b) => {
-                const nameA = a.dataset.name;
-                const nameB = b.dataset.name;
-                const dateA = new Date(a.dataset.date);
-                const dateB = new Date(b.dataset.date);
-                const typeA = a.dataset.type;
-                const typeB = b.dataset.type;
-
-                if (sortOption === 'name-asc') return nameA.localeCompare(nameB);
-                if (sortOption === 'name-desc') return nameB.localeCompare(nameA);
-                if (sortOption === 'date-asc') return dateA - dateB;
-                if (sortOption === 'date-desc') return dateB - dateA;
-                if (sortOption === 'type-asc') return typeA.localeCompare(typeB);
-                if (sortOption === 'type-desc') return typeB.localeCompare(typeA);
-                return 0;
-            });
-
-            list.innerHTML = '';
-            items.forEach(item => list.appendChild(item));
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 `;
