@@ -66,7 +66,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
         const fileDate = formatDate(stats.mtime);
         return `
             <tr>
-                <td><a href="${relativePathNested}/"><i class="fas fa-folder"></i> ${folderName}</a></td>
+                <td><a href="${relativePathNested}/" style="color: #0088cc;"><i class="fas fa-folder"></i> ${folderName}</a></td>
                 <td>-</td>
                 <td>${fileDate}</td>
                 <td></td>
@@ -93,20 +93,27 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
         body { background-color: #1a1a1a; color: #e0e0e0; }
         .card { background-color: #2c2c2c; border: 1px solid #444; border-radius: 8px; }
         .table { color: #e0e0e0; }
-        .table th, .table td { border-color: #444; }
+        .table th, .table td { border-color: #000; } /* Changed to black borders */
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
-        a { color: #0088cc; text-decoration: none; }
+        a { color: #0088cc; text-decoration: none; } /* Light blue for folder names */
         a:hover { text-decoration: underline; }
+        .table th, .table td { font-size: 18px; } /* Larger font for PC */
         @media (max-width: 768px) {
-            .table-responsive { font-size: 14px; }
+            .table-responsive { font-size: 14px; } /* Smaller font for mobile */
+            .header-container { flex-direction: column; text-align: center; }
+            .telegram-link { margin-top: 10px; }
         }
     </style>
 </head>
 <body>
-    <header class="p-3">
-        <h1 class="text-center">${folderName} Contents</h1>
-        <a href="${backLink}" class="btn btn-secondary mt-2">Back to ${parentFolderName}</a>
+    <header class="bg-dark">
+        <div class="header-container">
+            <div>
+                <h1>${folderName} Contents</h1>
+            </div>
+            <a href="${backLink}" class="btn btn-secondary mt-2">Back to ${parentFolderName}</a>
+        </div>
     </header>
     <div class="container mt-4">
         <div class="card">
@@ -129,7 +136,7 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
             </div>
         </div>
     </div>
-    <footer class="text-center p-3 mt-4">
+    <footer class="text-center p-3 mt-4 bg-dark">
         <p>© 2025 - 950-star, All Rights Reserved</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -163,7 +170,7 @@ const tableRows = entries.map(entry => {
     const downloadButton = entry.isFile() && name.endsWith('.pdf') ? `<a href="${href}" download class="btn btn-sm btn-danger"><i class="fas fa-download"></i></a>` : '';
     return `
         <tr>
-            <td><a href="${href}">${icon} ${name}</a></td>
+            <td><a href="${href}" style="color: ${entry.isDirectory() ? '#0088cc' : '#e0e0e0'};">${icon} ${name}</a></td>
             <td>${fileSize}</td>
             <td>${fileDate}</td>
             <td>${downloadButton}</td>
@@ -188,13 +195,15 @@ const newHtml = `
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
         .telegram-link { color: #0088cc; font-size: 24px; }
         .table { color: #e0e0e0; }
-        .table th, .table td { border-color: #444; }
+        .table th, .table td { border-color: #000; } /* Changed to black borders */
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
-        a { color: #0088cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a { text-decoration: none; }
+        a[href$="/"] { color: #0088cc; } /* Light blue for folder links only */
+        a[href$="/"]:hover, a:hover { text-decoration: underline; }
+        .table th, .table td { font-size: 18px; } /* Larger font for PC */
         @media (max-width: 768px) {
-            .table-responsive { font-size: 14px; }
+            .table-responsive { font-size: 14px; } /* Smaller font for mobile */
             .header-container { flex-direction: column; text-align: center; }
             .telegram-link { margin-top: 10px; }
         }
