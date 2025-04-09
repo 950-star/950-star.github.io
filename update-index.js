@@ -92,11 +92,14 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
     <style>
         body { background-color: #1a1a1a; color: #e0e0e0; }
         .card { background-color: #2c2c2c; border: 1px solid #444; border-radius: 8px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+        .telegram-link { color: #0088cc; font-size: 24px; }
         .table { color: #e0e0e0; }
-        .table th, .table td { border-color: #000; } /* Changed to black borders */
+        .table th, .table td { border-color: #000 !important; } /* Force black borders */
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
-        a { color: #0088cc; text-decoration: none; } /* Light blue for folder names */
+        a { text-decoration: none; }
+        a[href$="/"] { color: #0088cc; } /* Light blue for folder links only */
         a:hover { text-decoration: underline; }
         .table th, .table td { font-size: 18px; } /* Larger font for PC */
         @media (max-width: 768px) {
@@ -195,12 +198,12 @@ const newHtml = `
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
         .telegram-link { color: #0088cc; font-size: 24px; }
         .table { color: #e0e0e0; }
-        .table th, .table td { border-color: #000; } /* Changed to black borders */
+        .table th, .table td { border-color: #000 !important; } /* Force black borders */
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-danger:hover { background-color: #c82333; }
         a { text-decoration: none; }
         a[href$="/"] { color: #0088cc; } /* Light blue for folder links only */
-        a[href$="/"]:hover, a:hover { text-decoration: underline; }
+        a:hover { text-decoration: underline; }
         .table th, .table td { font-size: 18px; } /* Larger font for PC */
         @media (max-width: 768px) {
             .table-responsive { font-size: 14px; } /* Smaller font for mobile */
