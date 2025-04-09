@@ -146,8 +146,8 @@ function generateIndexForFolder(folderPath, relativePath, parentFolderName = 'Pa
 </body>
 </html>
     `;
-    fs.writeFileSync(folderIndexPath, folderHtml);
-    console.log(`Created/Updated index.html for folder: ${relativePath} at ${folderIndexPath}`);
+    fs.writeFileSync(folderIndexPath, folderHtml, { flag: 'w' }); // Force overwrite
+    console.log(`Created/Updated index.html for folder: ${relativePath} at ${folderIndexPath} at ${new Date().toLocaleTimeString()}`);
 
     // Recursively process subfolders
     folders.forEach(folder => {
@@ -254,10 +254,10 @@ const newHtml = `
 `;
 
 // Write the new index.html
-fs.writeFile(indexPath, newHtml, 'utf8', err => {
+fs.writeFile(indexPath, newHtml, { flag: 'w' }, err => {
     if (err) {
         console.error('Error writing index.html:', err);
         return;
     }
-    console.log('index.html updated successfully!');
+    console.log('index.html updated successfully at', new Date().toLocaleTimeString());
 });
