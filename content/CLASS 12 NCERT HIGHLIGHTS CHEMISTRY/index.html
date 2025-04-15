@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLASS 12 NCERT HIGHLIGHTS CHEMISTRY - Paperwallah</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div>
+                <h1>CLASS 12 NCERT HIGHLIGHTS CHEMISTRY</h1>
+                <p class="tagline">Browse contents of CLASS 12 NCERT HIGHLIGHTS CHEMISTRY</p>
+            </div>
+            <a href="https://t.me/paperwallah521" target="_blank" class="telegram-link">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="controls-container">
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search entire library...">
+                <button onclick="searchContent()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <ul id="content-list">
+<li data-name="alcohol phenol ether ncert highlights 💎.pdf" data-date="2025-04-15T12:19:50.231Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Alcohol Phenol Ether NCERT Highlights 💎.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Alcohol Phenol Ether NCERT Highlights 💎.pdf (27.17 MB, 2025-04-15)</a>
+                <a href="Alcohol Phenol Ether NCERT Highlights 💎.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="aldehyde ketone carboxylic ncert highlights 💎.pdf" data-date="2025-04-15T12:19:40.646Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Aldehyde Ketone Carboxylic NCERT Highlights 💎.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Aldehyde Ketone Carboxylic NCERT Highlights 💎.pdf (28.01 MB, 2025-04-15)</a>
+                <a href="Aldehyde Ketone Carboxylic NCERT Highlights 💎.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="amines ncert highlights 💎.pdf" data-date="2025-04-15T12:20:32.750Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Amines NCERT Highlights 💎.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Amines NCERT Highlights 💎.pdf (18.2 MB, 2025-04-15)</a>
+                <a href="Amines NCERT Highlights 💎.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="biomolecules ncert highlights 💎.pdf" data-date="2025-04-15T12:20:32.996Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Biomolecules NCERT Highlights 💎.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Biomolecules NCERT Highlights 💎.pdf (22.41 MB, 2025-04-15)</a>
+                <a href="Biomolecules NCERT Highlights 💎.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="coordination compounds ncert highlight_compressed (1).pdf" data-date="2025-04-15T12:20:17.881Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Coordination Compounds NCERT Highlight_compressed (1).pdf" target="_blank"><i class="fas fa-file-pdf"></i> Coordination Compounds NCERT Highlight_compressed (1).pdf (25.62 MB, 2025-04-15)</a>
+                <a href="Coordination Compounds NCERT Highlight_compressed (1).pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="haloalkane & arene ncert highlights 💎.pdf" data-date="2025-04-15T12:19:56.510Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Haloalkane & arene NCERT Highlights 💎.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Haloalkane & arene NCERT Highlights 💎.pdf (15.51 MB, 2025-04-15)</a>
+                <a href="Haloalkane & arene NCERT Highlights 💎.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+<li data-name="hydrocarbon ncert highlights ❤️.pdf" data-date="2025-04-15T12:20:33.358Z" data-type="file">
+            <div class="list-item-container">
+                <a href="Hydrocarbon NCERT Highlights ❤️.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Hydrocarbon NCERT Highlights ❤️.pdf (23.12 MB, 2025-04-15)</a>
+                <a href="Hydrocarbon NCERT Highlights ❤️.pdf" download class="download-btn"><i class='fas fa-download'></i></a>
+            </div>
+        </li>
+        </ul>
+    </main>
+    <footer>
+        <p><a href="/index.html">Back to Paperwallah</a></p>
+        <p>© 2025 - 950-star, All Rights Reserved</p>
+    </footer>
+    <script>
+        // Store initial content to restore after clearing search
+        const initialContent = document.getElementById('content-list').innerHTML;
+
+        async function searchContent() {
+            const input = document.getElementById('search-bar').value.trim().toLowerCase();
+            const list = document.getElementById('content-list');
+
+            if (!input) {
+                // Restore original content if search is cleared
+                list.innerHTML = initialContent;
+                return;
+            }
+
+            try {
+                // Fetch library index for global search
+                const response = await fetch('/library-index.json');
+                if (!response.ok) throw new Error('Failed to fetch library index');
+                const library = await response.json();
+
+                // Filter items by search query
+                const results = library.filter(item => 
+                    item.name.toLowerCase().includes(input)
+                );
+
+                // Generate HTML for search results
+                list.innerHTML = results.map(item => {
+                    const icon = item.type === 'folder' ? '<i class="fas fa-folder"></i> ' 
+                        : (item.name.endsWith('.pdf') ? '<i class="fas fa-file-pdf"></i> ' : '<i class="fas fa-file"></i> ');
+                    const downloadButton = item.type === 'file' && item.name.endsWith('.pdf')
+                        ? `<a href="${item.path}" download class="download-btn"><i class='fas fa-download'></i></a>`
+                        : '';
+                    const sizeDateText = item.type === 'file' && item.size !== undefined 
+                        ? ` (${formatFileSize(item.size)}, ${formatDate(new Date(item.date))})`
+                        : ` (${formatDate(new Date(item.date))})`;
+                    return `
+                        <li data-name="${item.name.toLowerCase()}" data-date="${item.date}" data-type="${item.type}">
+                            <div class="list-item-container">
+                                <a href="${item.path}"${item.type === 'file' && item.name.endsWith('.pdf') ? ' target="_blank"' : ''}>
+                                    ${icon}${item.name}${sizeDateText}
+                                </a>
+                                ${downloadButton}
+                            </div>
+                        </li>`;
+                }).join('');
+
+                function formatFileSize(bytes) {
+                    if (bytes === 0) return '0 Bytes';
+                    const k = 1024;
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                }
+
+                function formatDate(date) {
+                    return date.toISOString().split('T')[0];
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                list.innerHTML = '<li>Failed to load search results.</li>';
+            }
+        }
+
+        // Trigger search on keyup
+        document.getElementById('search-bar').addEventListener('keyup', searchContent);
+    </script>
+</body>
+</html>
